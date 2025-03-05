@@ -1,0 +1,74 @@
+# Dfs
+class StackImp():
+    # inz a stack
+    def __init__(self):
+        self.stack = []
+        
+    def add(self, node):
+        self.stack.append(node)
+    
+    def isEmpty(self):
+        return len(self.stack) == 0
+    
+    
+    def remove(self):
+        if self.isEmpty():
+            raise Exception("Stack is empty")
+        else:
+            return self.stack.pop()
+        
+class QueueImp(StackImp):
+    def remove(self):
+        if(self.isEmpty()):
+            raise Exception("Queue is empty")
+        else:
+            node = self.stack[0]
+            self.stack = self.stack[1:]
+            return node
+        
+def dfs(graph, start):
+    vis = set()
+    stack = StackImp()
+    stack.add(start)
+    
+    while not stack.isEmpty():
+        node = stack.remove()
+        
+        if node not in vis:
+            print(node, end=" ")
+            vis.add(node)
+            
+            for neighbour in reversed(graph.get(node, [])):
+                if neighbour not in vis:
+                    stack.add(neighbour)
+
+
+def bfs(grapg, start):
+    vis = set()
+    queue = QueueImp()
+    queue.add(start)
+    
+    while not queue.isEmpty():
+        node = queue.remove()
+        
+        if node not in vis:
+            print(node, end=" ")
+            vis.add(node)
+            
+            for neighbour in reversed(graph.get(node, [])):
+                if neighbour not in vis:
+                    queue.add(neighbour)
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['F'],
+    'F': []
+}
+
+
+dfs(graph, 'A') 
+print("\n")
+bfs(graph, 'A') 
