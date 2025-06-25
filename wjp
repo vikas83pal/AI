@@ -1,0 +1,46 @@
+from collections import deque
+
+
+def game(a, b, target):
+    visited = set()
+    q = deque()
+    q.append((0 ,0))
+
+    while q:
+        state = q.popleft()
+        x, y = state
+
+        if state in visited:
+            continue
+    
+
+        print(f"Jug A: {x}L, Jug B: {y}L")
+        visited.add(state)
+
+        if x == target or y == target:
+            print("Goal Reached")
+            return
+        
+
+        next_state = set()
+
+        next_state.add((a, y))
+        next_state.add((x, b))
+        next_state.add((0, y))
+        next_state.add((x, 0))
+
+        pour = min(x, b - y)
+        next_state.add((x - pour, y + pour))
+
+        pour = min(a - x, y)
+        next_state.add((x + pour, y - pour))
+
+        for ns in next_state:
+            if ns is not visited:
+                q.append(ns)
+    
+
+    print("No solution is obtained")
+
+
+game(4, 3, 2)
