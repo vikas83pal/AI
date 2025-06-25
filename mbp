@@ -1,0 +1,24 @@
+def monkey_banana(grid):
+    rows = len(grid)
+    
+    for i in range(1, rows):
+        for j in range(len(grid[i])):
+            # Initialize max_banana from above if in bounds
+            from_above = grid[i-1][j] if j < len(grid[i-1]) else 0
+            from_left_diag = grid[i-1][j-1] if j-1 >= 0 else 0
+            
+            # Update current cell with best possible path
+            grid[i][j] += max(from_above, from_left_diag)
+    
+    return max(grid[-1])
+
+
+grid = [
+    [7],
+    [3, 8],
+    [8, 1, 0],
+    [2, 7, 4, 4],
+    [4, 5, 2, 6, 5]
+]
+
+print("Maximum bananas the monkey can collect:", monkey_banana(grid))
